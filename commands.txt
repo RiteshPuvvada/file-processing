@@ -1,0 +1,66 @@
+mkdir -p input/r_001 && echo "hello world" > input/r_001/file1.txt
+mkdir -p input/r_002 && echo "hello world 2" > input/r_002/file1.txt
+mkdir -p input/r_003 && echo "hello world 3" > input/r_003/file1.txt
+mkdir -p input/r_004 && echo "hello world 4" > input/r_004/file1.txt
+mkdir -p input/r_005 && echo "hello world 4" > input/r_005/file1.txt
+
+
+
+echo "secret" > input/r_001/unreadable.bin && chmod 000 input/r_001/unreadable.bin
+echo "secret" > input/r_002/unreadable.bin && chmod 000 input/r_002/unreadable.bin
+echo "secret" > input/r_003/unreadable.bin && chmod 000 input/r_003/unreadable.bin
+echo "secret" > input/r_004/unreadable.bin && chmod 000 input/r_004/unreadable.bin
+
+
+touch Input/r_001/file1.img
+touch Input/r_002/file1.img
+touch Input/r_003/file1.img
+touch Input/r_004/file1.img
+touch Input/r_005/file1.img
+
+
+touch Input/r_001/file1.pdf
+touch Input/r_002/file1.pdf
+touch Input/r_003/file1.pdf
+touch Input/r_004/file1.pdf
+touch Input/r_005/file1.pdf
+
+
+```
+$ go build -o worker ./main.go && ./worker -input ./input -concurrency 4 -v
+
+```
+
+```output
+Scanning input dir: ./input (concurrency per folder: 4)
+Found 5 'r_' folders to process
+Processing folder: input/r_001
+  found 4 files in input/r_001
+    processed file1.txt -> success
+    processed unreadable.bin -> error
+    processed file1.img -> success
+    processed file1.pdf -> success
+Processing folder: input/r_002
+  found 4 files in input/r_002
+    processed file1.img -> success
+    processed unreadable.bin -> error
+    processed file1.pdf -> success
+    processed file1.txt -> success
+Processing folder: input/r_003
+  found 4 files in input/r_003
+    processed file1.img -> success
+    processed file1.txt -> success
+    processed unreadable.bin -> error
+    processed file1.pdf -> success
+Processing folder: input/r_004
+  found 4 files in input/r_004
+    processed file1.img -> success
+    processed file1.pdf -> success
+    processed file1.txt -> success
+    processed unreadable.bin -> error
+Processing folder: input/r_005
+  found 3 files in input/r_005
+    processed file1.img -> success
+    processed file1.pdf -> success
+    processed file1.txt -> success
+```
